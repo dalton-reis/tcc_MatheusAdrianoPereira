@@ -4,7 +4,7 @@ Final Paper Development
 ## Prerequisites
 
 * [Unity 2019.2.0f1](https://unity3d.com/pt/get-unity/download)
-* [Leap Motion SDK](https://developer.leapmotion.com/get-started)
+* [Leap Motion SDK 4.0.0](https://developer.leapmotion.com/get-started)
 
 ## How to run
 
