@@ -854,7 +854,7 @@ MonoBehaviour:
   _thumbFingerOtherHand: {fileID: 1773813809}
   _thumbFingerAOtherHand: {fileID: 681416715}
   _thumbFingerBOtherHand: {fileID: 632053922}
-  _defaultAcceptableDistance: 0.1
+  _defaultAcceptableDistance: 0.87
   _fistAcceptableDistance: 0
   _indexFingerAcceptableDistance: 0
   _indexFingerAAcceptableDistance: 0
