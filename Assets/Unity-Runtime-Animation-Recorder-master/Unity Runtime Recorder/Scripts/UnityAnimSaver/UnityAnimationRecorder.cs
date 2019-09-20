@@ -82,7 +82,7 @@ public class UnityAnimationRecorder : MonoBehaviour
     }
 
     private float lastTime = 0;
-    private float deltaFps = 0.05f;// fps;
+    private float deltaFps = 0.2f;// fps;
 
     // Update is called once per frame
     void Update()
