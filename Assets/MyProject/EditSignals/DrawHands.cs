@@ -33,10 +33,17 @@ public class DrawHands : MonoBehaviour
     [SerializeField]
     protected Mesh _sphereMesh;
     [SerializeField]
-    protected Material _material;
+    public Material _material;
 
     //Local
     protected Material _sphereMatRight;
+
+    internal bool DrawHand(string h)
+    {
+        if (h == "R") return _drawRight && _handRight.gameObject.activeInHierarchy;
+        else return _drawLeft && _handLeft.gameObject.activeInHierarchy;
+    }
+
     protected Material _sphereMatLeft;
 
     // Start is called before the first frame update
