@@ -9,6 +9,7 @@ public class DrawHands : MonoBehaviour
 
     [SerializeField]
     protected bool _drawRight = true;
+    public bool DrawRight { get { return _drawRight; } set { _drawRight = value; } }
     [SerializeField]
     protected HandPoints _handRight = null;
     [SerializeField]
@@ -16,6 +17,7 @@ public class DrawHands : MonoBehaviour
 
     [SerializeField]
     protected bool _drawLeft = true;
+    public bool DrawLeft { get { return _drawLeft; } set { _drawLeft = value; } }
     [SerializeField]
     protected HandPoints _handLeft = null;
     [SerializeField]
@@ -40,41 +42,41 @@ public class DrawHands : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (_drawRight) _sphereMatRight = new Material(_material) { color = _colorSpheresRight };
-        if (_drawLeft) _sphereMatLeft = new Material(_material) { color = _colorSpheresLeft };
+        _sphereMatRight = new Material(_material) { color = _colorSpheresRight };
+        _sphereMatLeft = new Material(_material) { color = _colorSpheresLeft };
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_drawRight)
+        if (_drawRight && _handRight.gameObject.activeInHierarchy)
         {
             #region Draw Points Right Hand
-            drawSphere(_sphereMatRight, _handRight.Fist.transform.position);
+            drawSphere(_sphereMatRight, _handRight.Fist, "R_FIST");
 
-            drawSphere(_sphereMatRight, _handRight.IndexFinger.transform.position);
-            drawSphere(_sphereMatRight, _handRight.IndexFingerA.transform.position);
-            drawSphere(_sphereMatRight, _handRight.IndexFingerB.transform.position);
-            drawSphere(_sphereMatRight, _handRight.IndexFingerC.transform.position);
+            drawSphere(_sphereMatRight, _handRight.IndexFinger, "R_INDEX");
+            drawSphere(_sphereMatRight, _handRight.IndexFingerA, "R_INDEX_A");
+            drawSphere(_sphereMatRight, _handRight.IndexFingerB, "R_INDEX_B");
+            drawSphere(_sphereMatRight, _handRight.IndexFingerC, "R_INDEX_C");
 
-            drawSphere(_sphereMatRight, _handRight.MiddleFinger.transform.position);
-            drawSphere(_sphereMatRight, _handRight.MiddleFingerA.transform.position);
-            drawSphere(_sphereMatRight, _handRight.MiddleFingerB.transform.position);
-            drawSphere(_sphereMatRight, _handRight.MiddleFingerC.transform.position);
+            drawSphere(_sphereMatRight, _handRight.MiddleFinger, "R_MIDDLE");
+            drawSphere(_sphereMatRight, _handRight.MiddleFingerA, "R_MIDDLE_A");
+            drawSphere(_sphereMatRight, _handRight.MiddleFingerB, "R_MIDDLE_B");
+            drawSphere(_sphereMatRight, _handRight.MiddleFingerC, "R_MIDDLE_C");
 
-            drawSphere(_sphereMatRight, _handRight.PinkyFinger.transform.position);
-            drawSphere(_sphereMatRight, _handRight.PinkyFingerA.transform.position);
-            drawSphere(_sphereMatRight, _handRight.PinkyFingerB.transform.position);
-            drawSphere(_sphereMatRight, _handRight.PinkyFingerC.transform.position);
+            drawSphere(_sphereMatRight, _handRight.PinkyFinger, "R_PINKY");
+            drawSphere(_sphereMatRight, _handRight.PinkyFingerA, "R_PINKY_A");
+            drawSphere(_sphereMatRight, _handRight.PinkyFingerB, "R_PINKY_B");
+            drawSphere(_sphereMatRight, _handRight.PinkyFingerC, "R_PINKY_C");
 
-            drawSphere(_sphereMatRight, _handRight.RingFinger.transform.position);
-            drawSphere(_sphereMatRight, _handRight.RingFingerA.transform.position);
-            drawSphere(_sphereMatRight, _handRight.RingFingerB.transform.position);
-            drawSphere(_sphereMatRight, _handRight.RingFingerC.transform.position);
+            drawSphere(_sphereMatRight, _handRight.RingFinger, "R_RING");
+            drawSphere(_sphereMatRight, _handRight.RingFingerA, "R_RING_A");
+            drawSphere(_sphereMatRight, _handRight.RingFingerB, "R_RING_B");
+            drawSphere(_sphereMatRight, _handRight.RingFingerC, "R_RING_C");
 
-            drawSphere(_sphereMatRight, _handRight.ThumbFinger.transform.position);
-            drawSphere(_sphereMatRight, _handRight.ThumbFingerA.transform.position);
-            drawSphere(_sphereMatRight, _handRight.ThumbFingerB.transform.position);
+            drawSphere(_sphereMatRight, _handRight.ThumbFinger, "R_THUMB");
+            drawSphere(_sphereMatRight, _handRight.ThumbFingerA, "R_THUMB_A");
+            drawSphere(_sphereMatRight, _handRight.ThumbFingerB, "R_THUMB_B");
             #endregion
 
             #region Draw Lines Right Hand
@@ -105,34 +107,34 @@ public class DrawHands : MonoBehaviour
             #endregion
         }
 
-        if (_drawLeft)
+        if (_drawLeft && _handLeft.gameObject.activeInHierarchy)
         {
             #region Draw Points Left Hand
-            drawSphere(_sphereMatLeft, _handLeft.Fist.transform.position);
+            drawSphere(_sphereMatLeft, _handLeft.Fist, "L_FIST");
 
-            drawSphere(_sphereMatLeft, _handLeft.IndexFinger.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.IndexFingerA.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.IndexFingerB.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.IndexFingerC.transform.position);
+            drawSphere(_sphereMatLeft, _handLeft.IndexFinger, "L_INDEX");
+            drawSphere(_sphereMatLeft, _handLeft.IndexFingerA, "L_INDEX_A");
+            drawSphere(_sphereMatLeft, _handLeft.IndexFingerB, "L_INDEX_B");
+            drawSphere(_sphereMatLeft, _handLeft.IndexFingerC, "L_INDEX_C");
 
-            drawSphere(_sphereMatLeft, _handLeft.MiddleFinger.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.MiddleFingerA.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.MiddleFingerB.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.MiddleFingerC.transform.position);
+            drawSphere(_sphereMatLeft, _handLeft.MiddleFinger, "L_MIDDLE");
+            drawSphere(_sphereMatLeft, _handLeft.MiddleFingerA, "L_MIDDLE_A");
+            drawSphere(_sphereMatLeft, _handLeft.MiddleFingerB, "L_MIDDLE_B");
+            drawSphere(_sphereMatLeft, _handLeft.MiddleFingerC, "L_MIDDLE_C");
 
-            drawSphere(_sphereMatLeft, _handLeft.PinkyFinger.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.PinkyFingerA.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.PinkyFingerB.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.PinkyFingerC.transform.position);
+            drawSphere(_sphereMatLeft, _handLeft.PinkyFinger, "L_PINKY");
+            drawSphere(_sphereMatLeft, _handLeft.PinkyFingerA, "L_PINKY_A");
+            drawSphere(_sphereMatLeft, _handLeft.PinkyFingerB, "L_PINKY_B");
+            drawSphere(_sphereMatLeft, _handLeft.PinkyFingerC, "L_PINKY_C");
 
-            drawSphere(_sphereMatLeft, _handLeft.RingFinger.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.RingFingerA.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.RingFingerB.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.RingFingerC.transform.position);
+            drawSphere(_sphereMatLeft, _handLeft.RingFinger, "L_RING");
+            drawSphere(_sphereMatLeft, _handLeft.RingFingerA, "L_RING_A");
+            drawSphere(_sphereMatLeft, _handLeft.RingFingerB, "L_RING_B");
+            drawSphere(_sphereMatLeft, _handLeft.RingFingerC, "L_RING_C");
 
-            drawSphere(_sphereMatLeft, _handLeft.ThumbFinger.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.ThumbFingerA.transform.position);
-            drawSphere(_sphereMatLeft, _handLeft.ThumbFingerB.transform.position);
+            drawSphere(_sphereMatLeft, _handLeft.ThumbFinger, "L_THUMB");
+            drawSphere(_sphereMatLeft, _handLeft.ThumbFingerA, "L_THUMB_A");
+            drawSphere(_sphereMatLeft, _handLeft.ThumbFingerB, "L_THUMB_B");
             #endregion
 
             #region Draw Lines Left Hand
@@ -164,9 +166,23 @@ public class DrawHands : MonoBehaviour
         }
     }
 
+
+    private void drawSphere(Material sphereMatRight, GameObject gameObject, string position)
+    {
+        ControlMarkers.DrawEffects(gameObject, position);
+
+        drawSphere(sphereMatRight, gameObject.transform.position);
+    }
+
     private void drawSphere(Material sphereMatRight, Vector3 position)
     {
-        drawSphere(position, _jointRadius, sphereMatRight);
+        drawSphere(InverterX(position), _jointRadius, sphereMatRight);
+    }
+
+    private Vector3 InverterX(Vector3 position)
+    {
+        return position;
+        //return new Vector3(-position.x, position.y, position.z);
     }
 
     private void drawSphere(Vector3 position, float radius, Material sphereMat)
@@ -181,6 +197,11 @@ public class DrawHands : MonoBehaviour
     }
 
     private void drawCylinder(Vector3 a, Vector3 b)
+    {
+        drawCylinder2(InverterX(a), InverterX(b));
+    }
+
+    private void drawCylinder2(Vector3 a, Vector3 b)
     {
         float length = (a - b).magnitude;
         Graphics.DrawMesh(getCylinderMesh(length),
@@ -236,5 +257,95 @@ public class DrawHands : MonoBehaviour
         mesh.UploadMeshData(true);
         _meshMap[lengthKey] = mesh;
         return mesh;
+    }
+
+    public GameObject GetPoint(string position)
+    {
+        switch (position)
+        {
+            case "R_FIST":
+                return _handRight.Fist;
+            case "R_INDEX":
+                return _handRight.IndexFinger;
+            case "R_INDEX_A":
+                return _handRight.IndexFingerA;
+            case "R_INDEX_B":
+                return _handRight.IndexFingerB;
+            case "R_INDEX_C":
+                return _handRight.IndexFingerC;
+            case "R_MIDDLE":
+                return _handRight.MiddleFinger;
+            case "R_MIDDLE_A":
+                return _handRight.MiddleFingerA;
+            case "R_MIDDLE_B":
+                return _handRight.MiddleFingerB;
+            case "R_MIDDLE_C":
+                return _handRight.MiddleFingerC;
+            case "R_PINKY":
+                return _handRight.PinkyFinger;
+            case "R_PINKY_A":
+                return _handRight.PinkyFingerA;
+            case "R_PINKY_B":
+                return _handRight.PinkyFingerB;
+            case "R_PINKY_C":
+                return _handRight.PinkyFingerC;
+            case "R_RING":
+                return _handRight.RingFinger;
+            case "R_RING_A":
+                return _handRight.RingFingerA;
+            case "R_RING_B":
+                return _handRight.RingFingerB;
+            case "R_RING_C":
+                return _handRight.RingFingerC;
+            case "R_THUMB":
+                return _handRight.ThumbFinger;
+            case "R_THUMB_A":
+                return _handRight.ThumbFingerA;
+            case "R_THUMB_B":
+                return _handRight.ThumbFingerB;
+            case "L_FIST":
+                return _handLeft.Fist;
+            case "L_INDEX":
+                return _handLeft.IndexFinger;
+            case "L_INDEX_A":
+                return _handLeft.IndexFingerA;
+            case "L_INDEX_B":
+                return _handLeft.IndexFingerB;
+            case "L_INDEX_C":
+                return _handLeft.IndexFingerC;
+            case "L_MIDDLE":
+                return _handLeft.MiddleFinger;
+            case "L_MIDDLE_A":
+                return _handLeft.MiddleFingerA;
+            case "L_MIDDLE_B":
+                return _handLeft.MiddleFingerB;
+            case "L_MIDDLE_C":
+                return _handLeft.MiddleFingerC;
+            case "L_PINKY":
+                return _handLeft.PinkyFinger;
+            case "L_PINKY_A":
+                return _handLeft.PinkyFingerA;
+            case "L_PINKY_B":
+                return _handLeft.PinkyFingerB;
+            case "L_PINKY_C":
+                return _handLeft.PinkyFingerC;
+            case "L_RING":
+                return _handLeft.RingFinger;
+            case "L_RING_A":
+                return _handLeft.RingFingerA;
+            case "L_RING_B":
+                return _handLeft.RingFingerB;
+            case "L_RING_C":
+                return _handLeft.RingFingerC;
+            case "L_THUMB":
+                return _handLeft.ThumbFinger;
+            case "L_THUMB_A":
+                return _handLeft.ThumbFingerA;
+            case "L_THUMB_B":
+                return _handLeft.ThumbFingerB;
+
+            default:
+                return null;
+        }
     }
 }

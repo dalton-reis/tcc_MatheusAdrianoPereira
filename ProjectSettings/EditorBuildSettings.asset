@@ -12,11 +12,21 @@ EditorBuildSettings:
     path: Assets/MyProject/LearnSignals/LearnSignalsScene.unity
     guid: 7ded9bb806557374c82ac513fd2bc8f5
   - enabled: 1
-    path: Assets/MyProject/GameAR/GameARScene.unity
-    guid: 079fc0140e189ee4ca0d6e0ffcce33a9
-  - enabled: 1
-    path: Assets/MyProject/GameVR/GameVRScene.unity
-    guid: e13f2cd82204cf943b1a5b354f942c4d
-  - enabled: 1
     path: Assets/SceneTeste.unity
     guid: b77c84f5cd2118d489878a7aa410d570
+  - enabled: 1
+    path: Assets/MyProject/EditSignals/ChoseSignalScene.unity
+    guid: bc98a4e3772ae6040aa53182ee828702
+  - enabled: 1
+    path: Assets/MyProject/EditSignals/EditAnimationSignalsScene.unity
+    guid: 83cc1a07b3e4d9744b2c550a06d066a1
+  - enabled: 1
+    path: Assets/MyProject/EditSignals/EditSignalScene.unity
+    guid: 5c843eba6dd043c48a8a9e337b54b8ed
+  - enabled: 1
+    path: Assets/MyProject/EditSignals/RecorderAnimationSignalScene.unity
+    guid: dc0c60d611fc5804e9e9f2b505131874
+  - enabled: 1
+    path: Assets/MyProject/LearnComplexitySignals/LearnComplexitySignalsScene.unity
+    guid: caf871113a82adf458f7533f1fe25d16
+  m_configObjects: {}

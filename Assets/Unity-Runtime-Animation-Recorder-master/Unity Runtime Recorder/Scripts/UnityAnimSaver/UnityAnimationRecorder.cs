@@ -11,9 +11,6 @@ public class UnityAnimationRecorder : MonoBehaviour
     public string savePath;
     public string fileName;
 
-    // use it when save multiple files
-    int fileIndex = 0;
-
     public KeyCode startRecordKey = KeyCode.Q;
     public KeyCode stopRecordKey = KeyCode.W;
 
@@ -104,7 +101,7 @@ public class UnityAnimationRecorder : MonoBehaviour
             nowTime += Time.deltaTime;
             if (lastTime + deltaFps <= nowTime)
             {
-                Debug.Log(nowTime.ToString());
+                
                 for (int i = 0; i < objRecorders.Length; i++)
                 {
                     objRecorders[i].AddFrame(nowTime);
@@ -185,11 +182,7 @@ public class UnityAnimationRecorder : MonoBehaviour
 
         string exportFilePath = savePath + fileName;
 
-        // if record multiple files when run
-        if (fileIndex != 0)
-            exportFilePath += "-" + fileIndex + ".anim";
-        else
-            exportFilePath += ".anim";
+        exportFilePath += ".anim";
 
 
         AnimationClip clip = new AnimationClip();
@@ -224,15 +217,14 @@ public class UnityAnimationRecorder : MonoBehaviour
         AssetDatabase.CreateAsset(clip, exportFilePath);
 
         CustomDebug(".anim file generated to " + exportFilePath);
-        fileIndex++;
     }
 
     void CustomDebug(string message)
     {
-        if (showLogGUI)
-            logMessage = message;
-        else
-            Debug.Log(message);
+        //if (showLogGUI)
+        //    logMessage = message;
+        //else
+        //    Debug.Log(message);
     }
 }
 #endif

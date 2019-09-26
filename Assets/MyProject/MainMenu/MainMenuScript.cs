@@ -23,6 +23,16 @@ public class MainMenuScript : MonoBehaviour
         Application.Quit();
     }
 
+    public void ConfigButton()
+    {
+        StartCoroutine(LoadScene("ChoseSignalScene"));
+    }
+
+    public void ConfigComplexitySignals()
+    {
+        StartCoroutine(LoadScene("LearnComplexitySignalsScene"));
+    }
+
     public void LoadGameARScene()
     {
         StartCoroutine(LoadScene("GameARScene"));
@@ -41,7 +51,7 @@ public class MainMenuScript : MonoBehaviour
         //SceneManager.LoadScene("GameVRScene");
     }
 
-    IEnumerator LoadScene(string scene)
+    public static IEnumerator LoadScene(string scene)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
 
