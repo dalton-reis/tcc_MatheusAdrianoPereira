@@ -6,6 +6,7 @@ public class ControlMarkers
     private static MarkerAnimation marker;
     public static Material DefaultMaterial;
     public static Mesh SphereMesh;
+    private static bool incrementedTime;
 
     internal static MarkerAnimation RefreshEffects(float time, ConfigAnimation cfgAnimation)
     {
@@ -14,7 +15,6 @@ public class ControlMarkers
 
     private static MarkerAnimation FindMarker(ConfigAnimation cfgAnimation, float time)
     {
-
         if (MarkerAnimation.TestTime(cfgAnimation.EndTime, time))
         {
             return cfgAnimation.EndMarker;
@@ -46,7 +46,8 @@ public class ControlMarkers
                 componentEffect.SphereMesh = SphereMesh;
             }
 
-            componentEffect.ActiveTrail = marker.Trail.Contains(position);
+            if (incrementedTime) componentEffect.ActiveTrail = marker.Trail.Contains(position);
+            else componentEffect.ActiveTrail = false;
             componentEffect.ActiveFlag = marker.Flag.Contains(position);
         }
     }
@@ -54,5 +55,10 @@ public class ControlMarkers
     public static void CleanMarker()
     {
         marker = null;
+    }
+
+    internal static void incremetTime(bool incrementTime)
+    {
+        incrementedTime = incrementTime;
     }
 }

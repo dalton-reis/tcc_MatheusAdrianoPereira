@@ -31,12 +31,12 @@ public class DrawHands : MonoBehaviour
     protected float _cylinderRadius = 0.02f;
 
     [SerializeField]
-    protected Mesh _sphereMesh;
+    public Mesh _sphereMesh;
     [SerializeField]
     public Material _material;
 
     //Local
-    protected Material _sphereMatRight;
+    public Material _sphereMatRight;
 
     internal bool DrawHand(string h)
     {
@@ -266,12 +266,77 @@ public class DrawHands : MonoBehaviour
         return mesh;
     }
 
+    private Matrix4x4 ReferenceLocalToWorldMatrixL = Matrix4x4.identity;
+    private Matrix4x4 ReferenceLocalToWorldMatrixR = Matrix4x4.identity;
+    public Matrix4x4 GetLocalToWorldMatrixReference(string side)
+    {
+        if (side == "R")
+        {
+            if (ReferenceLocalToWorldMatrixR == Matrix4x4.identity)
+                return _handRight.Palm.transform.localToWorldMatrix * Matrix4x4.identity;
+
+            return ReferenceLocalToWorldMatrixR;
+        }
+        else
+        {
+            if (ReferenceLocalToWorldMatrixL == Matrix4x4.identity)
+                return _handLeft.Palm.transform.localToWorldMatrix * Matrix4x4.identity;
+
+            return ReferenceLocalToWorldMatrixL;
+        }
+    }
+
+    private Matrix4x4 ReferenceWorldToLocalMatrixL = Matrix4x4.identity;
+    private Matrix4x4 ReferenceWorldToLocalMatrixR = Matrix4x4.identity;
+    public Matrix4x4 GetWorldToLocalMatrixReference(string side)
+    {
+        if (side == "R")
+        {
+            if (ReferenceWorldToLocalMatrixR == Matrix4x4.identity)
+                return _handRight.Palm.transform.worldToLocalMatrix * Matrix4x4.identity;
+
+            return ReferenceWorldToLocalMatrixR;
+        }
+        else
+        {
+            if (ReferenceWorldToLocalMatrixL == Matrix4x4.identity)
+                return _handLeft.Palm.transform.worldToLocalMatrix * Matrix4x4.identity;
+
+            return ReferenceWorldToLocalMatrixL;
+        }
+    }
+
+    public void SaveMtrixReference()
+    {
+        if (ReferenceLocalToWorldMatrixR == Matrix4x4.identity)
+            ReferenceLocalToWorldMatrixR = _handRight.Palm.transform.localToWorldMatrix * Matrix4x4.identity;
+
+        if (ReferenceLocalToWorldMatrixL == Matrix4x4.identity)
+            ReferenceLocalToWorldMatrixL = _handLeft.Palm.transform.localToWorldMatrix * Matrix4x4.identity;
+
+        if (ReferenceWorldToLocalMatrixR == Matrix4x4.identity)
+            ReferenceWorldToLocalMatrixR = _handRight.Palm.transform.worldToLocalMatrix * Matrix4x4.identity;
+
+        if (ReferenceWorldToLocalMatrixL == Matrix4x4.identity)
+            ReferenceWorldToLocalMatrixL = _handLeft.Palm.transform.worldToLocalMatrix * Matrix4x4.identity;
+    }
+
+    public void ClearReferencePoint()
+    {
+        ReferenceLocalToWorldMatrixL = Matrix4x4.identity;
+        ReferenceLocalToWorldMatrixR = Matrix4x4.identity;
+        ReferenceWorldToLocalMatrixL = Matrix4x4.identity;
+        ReferenceWorldToLocalMatrixR = Matrix4x4.identity;
+    }
+
     public GameObject GetPoint(string position)
     {
         switch (position)
         {
             case "R_FIST":
                 return _handRight.Fist;
+            case "R_PALM":
+                return _handRight.Palm;
             case "R_INDEX":
                 return _handRight.IndexFinger;
             case "R_INDEX_A":
@@ -312,6 +377,8 @@ public class DrawHands : MonoBehaviour
                 return _handRight.ThumbFingerB;
             case "L_FIST":
                 return _handLeft.Fist;
+            case "L_PALM":
+                return _handLeft.Palm;
             case "L_INDEX":
                 return _handLeft.IndexFinger;
             case "L_INDEX_A":

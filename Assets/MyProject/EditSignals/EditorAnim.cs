@@ -13,6 +13,7 @@ public class EditorAnim : MonoBehaviour
     public UnityEngine.UI.Slider Slider;
     public GameObject[] ButtonsInterfaceMarker;
     public MenuSelectPointsHands MenuHands;
+    public MenuSelectPointsHandsComparable MenuHandsComparable;
     public Material DefaultMaterial;
     public Mesh SphereMesh;
 
@@ -276,7 +277,7 @@ public class EditorAnim : MonoBehaviour
     }
     public void ClickCompareAnimation()
     {
-        MenuHands.MenuSelectHandsComparable("Ponto de Comparação", MarkerActivated);
+        MenuHandsComparable.MenuSelectHandsComparable("Ponto de Comparação", MarkerActivated);
     }
 
     private void ClickMarker(float time)

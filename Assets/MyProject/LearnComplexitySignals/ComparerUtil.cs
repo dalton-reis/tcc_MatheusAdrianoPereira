@@ -8,32 +8,61 @@ public class ComparerUtil
     internal static bool Compare(MarkerAnimation marker, DrawHands handRecordered, DrawHands handTrack)
     {
         bool result = true;
-        foreach(var pointCompare in marker.Compare)
+        foreach (var pointCompare in marker.Compare)
         {
-            var referencePointRecordered = handRecordered.GetPoint(pointCompare.Substring(0, 1) + "_FIST");
-            var pointCompareRecordered = handRecordered.GetPoint(pointCompare);
+            //var referencePointRecordered = handRecordered.GetPoint(pointCompare.part.Substring(0, 1) + "_PALM");
+            var pointCompareRecordered = handRecordered.GetPoint(pointCompare.part);
 
-            var referencePointTrack = handTrack.GetPoint(pointCompare.Substring(0, 1) + "_FIST");
-            var pointCompareTrack = handTrack.GetPoint(pointCompare);
+            //var referencePointTrack = handTrack.GetPoint(pointCompare.part.Substring(0, 1) + "_PALM");
+            var pointCompareTrack = handTrack.GetPoint(pointCompare.part);
 
-            var distanceReferenceRecordered = (referencePointRecordered.transform.position - pointCompareRecordered.transform.position).magnitude;
-            var distanceReferenceTrack = (referencePointTrack.transform.position - pointCompareTrack.transform.position).magnitude;
+            var matrixTracked = handTrack.GetLocalToWorldMatrixReference(pointCompare.part.Substring(0, 1));
+            var matrixRecordered = handRecordered.GetWorldToLocalMatrixReference(pointCompare.part.Substring(0, 1));
 
-            
+            //var distanceReferenceRecordered = (referencePointRecordered.transform.position - pointCompareRecordered.transform.position).magnitude;
+            //var distanceReferenceTrack = (referencePointTrack.transform.position - pointCompareTrack.transform.position).magnitude;
 
-            if (distanceReferenceTrack < distanceReferenceRecordered - 0.03f || distanceReferenceTrack > distanceReferenceRecordered + 0.03f)
+            //var matrixTracked = new Matrix4x4(referencePointTrack.transform.localToWorldMatrix.GetColumn(0),
+            //    referencePointTrack.transform.localToWorldMatrix.GetColumn(1),
+            //    referencePointTrack.transform.localToWorldMatrix.GetColumn(2),
+            //    referencePointTrack.transform.localToWorldMatrix.GetColumn(3));
+            //var matrixRecordered = referencePointRecordered.transform.worldToLocalMatrix;
+            ///TODO como manter a rotação na matrix de transformação
+            //rotation.SetFromToRotation(new Vector3(0, 0, 0), new Vector3(1,0,0));// Set(matrixRecordered.rotation.x, matrixRecordered.rotation.y, matrixRecordered.rotation.z, matrixRecordered.rotation.w);
+
+            var pointProjectionTrack = matrixTracked.MultiplyPoint(matrixRecordered.MultiplyPoint(pointCompareRecordered.transform.position));
+
+            var distance = (pointProjectionTrack - pointCompareTrack.transform.position).magnitude;
+            var distanceAcceptable = pointCompare.value / 5;
+
+            //if (distanceReferenceTrack < distanceReferenceRecordered - pointCompare.value || distanceReferenceTrack > distanceReferenceRecordered + pointCompare.value)
+            if (distance > distanceAcceptable || distance < -distanceAcceptable)
+            //if (distance > 0.01f || distance < -0.01f)
             {
                 result = false;
-                if (handTrack.DrawHand(pointCompare.Substring(0, 1)))
+                if (handTrack.DrawHand(pointCompare.part.Substring(0, 1)))
                 {
-                    drawCylinder2(referencePointTrack.transform.localToWorldMatrix.MultiplyPoint(referencePointRecordered.transform.worldToLocalMatrix.MultiplyPoint(pointCompareRecordered.transform.position)),
-                        pointCompareTrack.transform.position,
-                        handTrack);
+                    drawSphere(pointProjectionTrack, distanceAcceptable, handTrack);
+                    //drawCylinder2(pointProjectionTrack,
+                    //    pointCompareTrack.transform.position,
+                    //    handTrack);
                 }
 
             }
         }
         return result;
+    }
+
+    private static void drawSphere(Vector3 position, float radius, DrawHands drawHands)
+    {
+        var material = new Material(drawHands._material) { color = new Color(255, 0, 0, 30) };
+        //multiply radius by 2 because the default unity sphere has a radius of 0.5 meters at scale 1.
+        Graphics.DrawMesh(drawHands._sphereMesh,
+                          Matrix4x4.TRS(position,
+                                        Quaternion.identity,
+                                        Vector3.one * radius * 2.0f * drawHands.transform.lossyScale.x),
+                          material, 0,
+                          null, 0, null, true);
     }
 
     private static void drawCylinder2(Vector3 a, Vector3 b, DrawHands drawHands)
@@ -48,7 +77,7 @@ public class ComparerUtil
                           drawHands.gameObject.layer,
                           null, 0, null, true);
     }
-    
+
     private static Dictionary<int, Mesh> _meshMap = new Dictionary<int, Mesh>();
     private static int _cylinderResolution = 12;
     private static float _cylinderRadius = 0.02f;

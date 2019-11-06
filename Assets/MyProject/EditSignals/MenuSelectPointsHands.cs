@@ -5,45 +5,26 @@ using UnityEngine.UI;
 public class MenuSelectPointsHands : MonoBehaviour
 {
     public Text Title;
-    public Sprite SpriteToggleActive;
-    public Sprite SpriteToggleInactive;
-    public GameObject inputOrientation;
     public GameObject[] ButtonsCheck;
 
     private List<string> ActivePointsHand;
     private MarkerAnimation markerActive;
-    private InputField inputFieldOrientation;
 
     void Start()
     {
-        UpdateListnerInputOrientation();
     }
 
-    private void UpdateListnerInputOrientation()
-    {
-        inputFieldOrientation = inputOrientation.GetComponent<InputField>();
-        inputFieldOrientation.onValueChanged.RemoveAllListeners();
-        inputFieldOrientation.onValueChanged.AddListener((m) =>
-        {
-            if (markerActive != null)
-            {
-                markerActive.Guidance = m;
-            }
-        });
-    }
-
-    public void MenuSelectHandsComparable(string name, MarkerAnimation marker)
-    {
-        UpdateListnerInputOrientation();
-        MenuSelectHands(name, marker.Compare);
-        inputFieldOrientation.SetTextWithoutNotify(marker.Guidance);
-        inputOrientation.SetActive(true);
-        markerActive = marker;
-    }
+    //public void MenuSelectHandsComparable(string name, MarkerAnimation marker)
+    //{
+    //    UpdateListnerInputOrientation();
+    //    MenuSelectHands(name, marker.Compare);
+    //    inputFieldOrientation.SetTextWithoutNotify(marker.Guidance);
+    //    inputOrientation.SetActive(true);
+    //    markerActive = marker;
+    //}
 
     public void MenuSelectHands(string name, List<string> pointsHand)
     {
-        inputOrientation.SetActive(false);
         Title.text = name;
         ActivePointsHand = pointsHand;
         gameObject.SetActive(!gameObject.activeInHierarchy);
@@ -82,7 +63,6 @@ public class MenuSelectPointsHands : MonoBehaviour
 
     public void Close()
     {
-        inputOrientation.SetActive(false);
         gameObject.SetActive(false);
     }
 }

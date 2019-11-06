@@ -7,6 +7,7 @@ public class HandPoints : MonoBehaviour
 
     #region Property Hand
     public GameObject Fist;
+    public GameObject Palm;
     public GameObject IndexFinger;
     public GameObject IndexFingerA;
     public GameObject IndexFingerB;

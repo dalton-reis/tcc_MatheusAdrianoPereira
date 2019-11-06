@@ -13,7 +13,10 @@ public class LearnComplexitySignals : MonoBehaviour
 
     public GameObject HandRecordered;
     public GameObject HandTrack;
+    public GameObject Congraturation;
     public GameObject Guidance;
+    public GameObject GuidanceLeftHand;
+    public GameObject GuidanceRightHand;
     public GameObject[] ButonsHandsGuidance;
 
 
@@ -41,13 +44,16 @@ public class LearnComplexitySignals : MonoBehaviour
 
     private void LoadSignal()
     {
+        Congraturation.SetActive(false);
         var signal = Signals.FindSignal(Node.Value.Id);
         var dhRecordered = HandRecordered.GetComponent<DrawHands>();
         dhRecordered.DrawRight = signal.UseRightHand;
         dhRecordered.DrawLeft = signal.UseLeftHand;
+        dhRecordered.ClearReferencePoint();
         var dhTrack = HandTrack.GetComponent<DrawHands>();
         dhTrack.DrawRight = signal.UseRightHand;
         dhTrack.DrawLeft = signal.UseLeftHand;
+        dhTrack.ClearReferencePoint();
 
 
         Clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(PATH_SIGNAL(Node.Value.Id));
@@ -64,6 +70,7 @@ public class LearnComplexitySignals : MonoBehaviour
     {
         if (IsPlayed)
         {
+            Congraturation.SetActive(false);
             var marker = ControlMarkers.RefreshEffects(TimeSignal, CfgAnimation);
             Clip.SampleAnimation(HandRecordered, TimeSignal);
             DisableGuidance();
@@ -72,15 +79,27 @@ public class LearnComplexitySignals : MonoBehaviour
             if (marker.TimeMarker < TimeSignal && marker.TimeMarker >= TimeSignal - LastDeltaTime) {
                 if (marker.Compare.Count > 0)
                 {
-                    var acceptComparable = ComparerUtil.Compare(marker, HandRecordered.GetComponent<DrawHands>(), HandTrack.GetComponent<DrawHands>());
+                    var DHRecordered = HandRecordered.GetComponent<DrawHands>();
+                    var DHTracked = HandTrack.GetComponent<DrawHands>();
+                    var acceptComparable = ComparerUtil.Compare(marker, DHRecordered, DHTracked);
                     if (!acceptComparable)
                     {
                         incrementTime = false;
-                        EnableGuidance(marker.Guidance);
+                        EnableGuidance(marker.Guidance, DHRecordered);
                         ControlSelectPointsHands.UpdateColorPointsHands(ButonsHandsGuidance, marker.Compare);
+                    }
+                    else
+                    {
+                        if (MarkerWithPalm(marker))
+                        {
+                            DHRecordered.SaveMtrixReference();
+                            DHTracked.SaveMtrixReference();
+                        }
                     }
                 }
             }
+
+            ControlMarkers.incremetTime(incrementTime);
 
             if (incrementTime)
             {
@@ -91,9 +110,20 @@ public class LearnComplexitySignals : MonoBehaviour
                 {
                     TimeSignal = CfgAnimation.EndTime;
                     IsPlayed = false;
+                    Congraturation.SetActive(true);
                 }
             }
         }
+    }
+
+    private bool MarkerWithPalm(MarkerAnimation marker)
+    {
+        foreach (var part in marker.Compare)
+        {
+            if (part.part.Substring(2) == "FIST")
+                return true;
+        }
+        return false;
     }
 
     private void DisableGuidance()
@@ -101,8 +131,10 @@ public class LearnComplexitySignals : MonoBehaviour
         Guidance.SetActive(false);
     }
 
-    private void EnableGuidance(string guidanceDescription)
+    private void EnableGuidance(string guidanceDescription, DrawHands drawHands)
     {
+        GuidanceLeftHand.SetActive(drawHands.DrawLeft);
+        GuidanceRightHand.SetActive(drawHands.DrawRight);
         Guidance.SetActive(true);
         var textGuidance = Guidance.transform.Find("Description").GetComponent<Text>();
         textGuidance.text = guidanceDescription;
@@ -117,6 +149,8 @@ public class LearnComplexitySignals : MonoBehaviour
             if (TimeSignal >= CfgAnimation.EndTime)
             {
                 TimeSignal = CfgAnimation.StartTime;
+                HandRecordered.GetComponent<DrawHands>().ClearReferencePoint();
+                HandTrack.GetComponent<DrawHands>().ClearReferencePoint();
             }
         }
     }
