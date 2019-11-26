@@ -57,7 +57,7 @@ public class MainMenuScript : MonoBehaviour
 
         while (!asyncLoad.isDone)
         {
-            Debug.Log(asyncLoad.progress);
+            //Debug.Log(asyncLoad.progress);
             yield return null;
         }
     }

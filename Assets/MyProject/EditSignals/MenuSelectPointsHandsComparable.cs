@@ -143,17 +143,20 @@ public class MenuSelectPointsHandsComparable : MonoBehaviour
     {
         if (ActivePart != null)
         {
-            if (Indicator.transform.parent != ActiveBtnPart.transform)
-            {
-                Indicator.transform.parent = ActiveBtnPart.transform;
-            }
+            //if (Indicator.transform.parent != ActiveBtnPart.transform)
+            //{
+            //    Indicator.transform.parent = ActiveBtnPart.transform;
+            //}
             Indicator.SetActive(true);
             var transformRect = Indicator.GetComponent<RectTransform>();
             transformRect.sizeDelta = new Vector2(ActivePart.value*80, ActivePart.value * 80);
 
-            transform.lossyScale.Set(1, 1, 1);
-            transformRect.anchoredPosition3D = new Vector3(0, 0, 0);
-            transformRect.localRotation = new Quaternion(0, 0, 0, 0);
+            var positionTopBtn = ActiveBtnPart.transform.Find("TOPBTN")?.transform;
+
+            if (positionTopBtn != null)
+            {
+                Indicator.transform.SetPositionAndRotation(new Vector3(positionTopBtn.position.x, positionTopBtn.position.y, positionTopBtn.position.z), positionTopBtn.rotation);
+            }
         }
         else
         {

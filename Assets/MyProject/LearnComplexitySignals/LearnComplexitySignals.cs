@@ -155,6 +155,17 @@ public class LearnComplexitySignals : MonoBehaviour
         }
     }
 
+    public void RestartAnimation()
+    {
+        IsPlayed = true;
+        DisableGuidance();
+        TimeSignal = CfgAnimation.StartTime;
+        var marker = ControlMarkers.RefreshEffects(TimeSignal, CfgAnimation);
+        Clip.SampleAnimation(HandRecordered, TimeSignal);
+        HandRecordered.GetComponent<DrawHands>().ClearReferencePoint();
+        HandTrack.GetComponent<DrawHands>().ClearReferencePoint();
+    }
+
     public void ClickNext()
     {
         if (Node.Next != null)

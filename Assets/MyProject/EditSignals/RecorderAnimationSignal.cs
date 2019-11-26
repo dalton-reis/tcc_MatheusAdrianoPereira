@@ -52,6 +52,7 @@ public class RecorderAnimationSignal : MonoBehaviour
     {
         if (!IsRecorder)
         {
+            Debug.Log("Save Recorder!");
             IsSavedRecorder = true;
             if (System.IO.File.Exists(PATH_SIGNAL)) AssetDatabase.DeleteAsset(PATH_SIGNAL);
             AssetDatabase.MoveAsset(PATH_LAST, PATH_SIGNAL);
@@ -66,13 +67,16 @@ public class RecorderAnimationSignal : MonoBehaviour
     {
         if (!IsRecorder)
         {
+            Debug.Log("Start Recorder!");
             if (System.IO.File.Exists(PATH_LAST)) AssetDatabase.DeleteAsset(PATH_LAST);
             Recorder.StartRecording();
             IsRecorder = true;
+            IsSavedRecorder = false;
             txtBtnRecorder.text = "FINALIZAR";
         }
         else
         {
+            Debug.Log("End Recorder!");
             txtBtnRecorder.text = "GRAVAR";
             Recorder.StopRecording();
             IsSavedRecorder = false;

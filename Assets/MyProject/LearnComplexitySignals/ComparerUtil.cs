@@ -42,7 +42,7 @@ public class ComparerUtil
                 result = false;
                 if (handTrack.DrawHand(pointCompare.part.Substring(0, 1)))
                 {
-                    drawSphere(pointProjectionTrack, distanceAcceptable, handTrack);
+                    drawSphere(pointProjectionTrack, distanceAcceptable, handTrack, pointCompare.part.Substring(0, 1));
                     //drawCylinder2(pointProjectionTrack,
                     //    pointCompareTrack.transform.position,
                     //    handTrack);
@@ -53,9 +53,11 @@ public class ComparerUtil
         return result;
     }
 
-    private static void drawSphere(Vector3 position, float radius, DrawHands drawHands)
+    private static void drawSphere(Vector3 position, float radius, DrawHands drawHands, string side)
     {
-        var material = new Material(drawHands._material) { color = new Color(255, 0, 0, 30) };
+        var material = new Material(drawHands._material);
+        if (side == "R") material.color = drawHands._colorSpheresRight;
+        else material.color = drawHands._colorSpheresLeft;
         //multiply radius by 2 because the default unity sphere has a radius of 0.5 meters at scale 1.
         Graphics.DrawMesh(drawHands._sphereMesh,
                           Matrix4x4.TRS(position,

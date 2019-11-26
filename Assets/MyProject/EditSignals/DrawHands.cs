@@ -13,7 +13,7 @@ public class DrawHands : MonoBehaviour
     [SerializeField]
     protected HandPoints _handRight = null;
     [SerializeField]
-    protected Color _colorSpheresRight = new Color(0.0f, 0.0f, 1.0f);
+    public Color _colorSpheresRight = new Color(0.0f, 0.0f, 1.0f);
 
     [SerializeField]
     protected bool _drawLeft = true;
@@ -21,7 +21,7 @@ public class DrawHands : MonoBehaviour
     [SerializeField]
     protected HandPoints _handLeft = null;
     [SerializeField]
-    protected Color _colorSpheresLeft = new Color(0.0f, 0.0f, 1.0f);
+    public Color _colorSpheresLeft = new Color(0.0f, 0.0f, 1.0f);
 
     [SerializeField]
     protected float _jointRadius = 0.06f;
@@ -270,7 +270,7 @@ public class DrawHands : MonoBehaviour
     private Matrix4x4 ReferenceLocalToWorldMatrixR = Matrix4x4.identity;
     public Matrix4x4 GetLocalToWorldMatrixReference(string side)
     {
-        if (side == "R")
+        if (DrawRight)
         {
             if (ReferenceLocalToWorldMatrixR == Matrix4x4.identity)
                 return _handRight.Palm.transform.localToWorldMatrix * Matrix4x4.identity;
@@ -290,7 +290,7 @@ public class DrawHands : MonoBehaviour
     private Matrix4x4 ReferenceWorldToLocalMatrixR = Matrix4x4.identity;
     public Matrix4x4 GetWorldToLocalMatrixReference(string side)
     {
-        if (side == "R")
+        if (DrawRight)
         {
             if (ReferenceWorldToLocalMatrixR == Matrix4x4.identity)
                 return _handRight.Palm.transform.worldToLocalMatrix * Matrix4x4.identity;
